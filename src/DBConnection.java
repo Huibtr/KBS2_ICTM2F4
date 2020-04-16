@@ -3,9 +3,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DBConnection {
-    static Connection connection = null;
-    static String databaseName = "";
-    static String url = "jdbc:mysql://localhost:3306/student";
+    static String databaseName = "wideworldimporters";
+    static String url = "jdbc:mysql://localhost:3306/" + databaseName;
     static String username = "root";
     static String password = "";
 
@@ -22,16 +21,16 @@ public class DBConnection {
             System.out.println("connected to database");
 
             Statement query = connection.createStatement();
-            // insert
-            //query.executeUpdate("insert into student values ('S11224', 'pim', 'hart', 'test', 'test'); ");
 
-            ResultSet result = query.executeQuery("SELECT * FROM student;");
-            System.out.println("WWI");
+            // haalt nu alle orderlines uit de wwi database op
+            ResultSet result = query.executeQuery("SELECT * FROM orderlines;");
             while (result.next()){
-                String table = result.getString("voornaam");
+                String table = result.getString("OrderID");
                 System.out.println(table);
             }
 
+            // insert
+            //query.executeUpdate("insert into student values ('S11224', 'pim', 'hart', 'test', 'test'); ");
 
         }
         catch (ClassNotFoundException ex){
