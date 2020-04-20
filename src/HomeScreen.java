@@ -29,7 +29,7 @@ public class HomeScreen extends JFrame implements ActionListener {
             DataScreen dataScreen = new DataScreen();
         }
         else if(e.getSource() == jbRoute){
-            RouteBepaling route = new RouteBepaling();
+            RouteBepalingScherm route = new RouteBepalingScherm();
 
         }
     }
