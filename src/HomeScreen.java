@@ -27,9 +27,11 @@ public class HomeScreen extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == jbData){
             DataScreen dataScreen = new DataScreen();
+            dispose();
         }
         else if(e.getSource() == jbRoute){
 
+            dispose();
         }
     }
 }

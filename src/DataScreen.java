@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class DataScreen extends JFrame implements ActionListener {
     private JButton jbQuantity;
@@ -32,11 +33,14 @@ public class DataScreen extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == jbQuantity){
-            QuantityScreen quantityScreen = new QuantityScreen();
+
+            dispose();
         } else if (e.getSource() == jbOrders){
-            OrderScreen orderScreen = new OrderScreen();
+
+            dispose();
         } else if(e.getSource() == jbCustomers){
             CustomerScreen customerScreen = new CustomerScreen();
+            dispose();
         }
     }
 }
