@@ -17,6 +17,5 @@ public class RouteBepalingScherm extends JFrame {
         tabel = new JTable(3,5);
         add(tabel);
         setVisible(true);
-
     }
 }
