@@ -7,10 +7,11 @@ public class DBConnection {
     static String url = "jdbc:mysql://localhost:3306/" + databaseName;
     static String username = "root";
     static String password = "";
+    private ResultSet result;
 
     public static void main(String[] args) {
-        DBConnection connection = new DBConnection();
-        connection.createConnection();
+        DBConnection dbConnection = new DBConnection();
+        dbConnection.getCustomers();
     }
 
     public void createConnection(){
@@ -40,5 +41,24 @@ public class DBConnection {
             ex.printStackTrace();
         }
 
+    }
+
+    public ResultSet getCustomers(){
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(url, username, password);
+            Statement query = connection.createStatement();
+
+             result = query.executeQuery("select CustomerID, CustomerName, DeliveryAddressLine1, CityName, DeliveryPostalCode, PhoneNumber from customers inner join cities where customers.DeliveryCityID =  cities.CityID;");
+
+        }
+        catch (ClassNotFoundException ex){
+            Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE,null, ex);
+        }
+        catch (SQLException ex){
+            Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE,null, ex);
+            ex.printStackTrace();
+        }
+        return result;
     }
 }
