@@ -31,7 +31,6 @@ public class DBConnection {
 
             // insert
             //query.executeUpdate("insert into student values ('S11224', 'pim', 'hart', 'test', 'test'); ");
-
         }
         catch (ClassNotFoundException ex){
             Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE,null, ex);
@@ -40,5 +39,6 @@ public class DBConnection {
             Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE,null, ex);
             ex.printStackTrace();
         }
+
     }
 }
