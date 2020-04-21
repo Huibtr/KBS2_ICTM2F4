@@ -30,6 +30,7 @@ public class HomeScreen extends JFrame implements ActionListener {
             dispose();
         }
         else if(e.getSource() == jbRoute){
+            RouteBepalingScherm route = new RouteBepalingScherm();
 
             dispose();
         }
