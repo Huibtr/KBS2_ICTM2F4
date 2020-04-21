@@ -31,6 +31,7 @@ public class HomeScreen extends JFrame implements ActionListener {
         }
         else if(e.getSource() == jbRoute){
             RoutingScreen routingscreen = new RoutingScreen();
+            repaint();
             dispose();
         }
     }
