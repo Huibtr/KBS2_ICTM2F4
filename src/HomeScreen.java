@@ -13,7 +13,7 @@ public class HomeScreen extends JFrame implements ActionListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridLayout(2,1));
 
-        jbData = new JButton("Gegevens inzien/ aanpassen");
+        jbData = new JButton("Gegevens inzien");
         jbData.addActionListener(this);
         add(jbData);
 
@@ -31,7 +31,6 @@ public class HomeScreen extends JFrame implements ActionListener {
         }
         else if(e.getSource() == jbRoute){
             RoutingScreen routingscreen = new RoutingScreen();
-            repaint();
             dispose();
         }
     }

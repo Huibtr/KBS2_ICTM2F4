@@ -4,29 +4,30 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class RoutingScreen extends JFrame implements ActionListener {
+    private Coordination coordination;
     private JTable gegevens;
-    private RoutingPanel route;
-    private JButton JBadd;
+    private JButton jbAdd;
 
     public RoutingScreen(){
-        setTitle("Routingscreen");
         setLayout(new FlowLayout());
-        setSize(500,500);
-        setDefaultCloseOperation(HIDE_ON_CLOSE);
-        route = new RoutingPanel();
-        add(route);
-        gegevens = new JTable(3,5);
-        add(gegevens);
-        JBadd = new JButton("toevoegen");
-        JBadd.addActionListener(this);
-        add(JBadd);
+                setSize(530, 500);
+        coordination = new Coordination();
+        RoutingPanel panel = new RoutingPanel(coordination);
+        add(panel);
+        jbAdd = new JButton("toevoegen");
+        jbAdd.addActionListener(this);
+        add(jbAdd);
+
         setVisible(true);
     }
 
     @Override
-    public void actionPerformed(ActionEvent actionEvent) {
-        if(actionEvent.getSource() == JBadd){
-            System.out.println("gedrukt");
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == jbAdd) {
+            coordination.AddCoordination(10);
+            for (Integer test : coordination.getCoordination()) {
+                System.out.println(test);
+            }
         }
         repaint();
     }
