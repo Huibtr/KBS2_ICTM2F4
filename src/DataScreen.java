@@ -33,6 +33,7 @@ public class DataScreen extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == jbQuantity){
+            QuantityScreen quantityScreen = new QuantityScreen();
             dispose();
         } else if (e.getSource() == jbOrders){
             OrderScreen orderScreen = new OrderScreen();
