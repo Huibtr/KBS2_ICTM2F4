@@ -27,4 +27,24 @@ public class DBConnection {
         }
         return result;
     }
+
+    public ResultSet getOrderlines(){
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(url, username, password);
+            Statement query = connection.createStatement();
+
+            result = query.executeQuery("SELECT orders.CustomerID, orders.OrderID, orderlines.StockitemID, orderlines.Quantity FROM orderlines LEFT JOIN orders ON orders.OrderID=orderlines.OrderID Where CustomerID < 4;");
+
+        }
+        catch (ClassNotFoundException ex){
+            Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE,null, ex);
+        }
+        catch (SQLException ex){
+            Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE,null, ex);
+            ex.printStackTrace();
+        }
+        return result;
+    }
 }
+
