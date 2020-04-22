@@ -21,7 +21,7 @@ public class RoutingPanel extends JPanel {
         this.setPreferredSize(new Dimension(500, 400));
     }
 
-    public void paintComponents(Graphics g) {
+    public void paintComponent(Graphics g) {
         super.paintComponent(g);
         setBackground(Color.white);
         int y = yStart;
