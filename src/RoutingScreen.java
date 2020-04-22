@@ -10,13 +10,14 @@ public class RoutingScreen extends JFrame implements ActionListener {
 
     public RoutingScreen(){
         setLayout(new FlowLayout());
-                setSize(530, 500);
+        setSize(530, 500);
         coordination = new Coordination();
         RoutingPanel panel = new RoutingPanel(coordination);
         add(panel);
         jbAdd = new JButton("toevoegen");
         jbAdd.addActionListener(this);
         add(jbAdd);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         setVisible(true);
     }
