@@ -12,6 +12,7 @@ public class OrderScreen extends JFrame implements ActionListener{
     private final JButton jbload;
     private final JTable jtorder;
     private final DefaultTableModel tableModel = new DefaultTableModel();
+    private JButton jbGoBack;
 
     public OrderScreen() {
 
@@ -21,13 +22,16 @@ public class OrderScreen extends JFrame implements ActionListener{
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        jtorder = new JTable(tableModel);
-        add(new JScrollPane(jtorder), BorderLayout.CENTER);
-
+        jbGoBack = new JButton("< terug");
+        jbGoBack.addActionListener(this);
+        add(jbGoBack, BorderLayout.SOUTH);
 
         jbload = new JButton("Haal bestelgegevens op");
         jbload.addActionListener(this);
         add(jbload, BorderLayout.PAGE_START);
+
+        jtorder = new JTable(tableModel);
+        add(new JScrollPane(jtorder), BorderLayout.CENTER);
 
     }
 
@@ -43,6 +47,9 @@ public class OrderScreen extends JFrame implements ActionListener{
                 }
             }.execute();
             jbload.setText("Refresh bestelgegevens");
+        } else if(e.getSource() == jbGoBack) {
+            dispose();
+            DataScreen dataScreen = new DataScreen();
         }
     }
 
