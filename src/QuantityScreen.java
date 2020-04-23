@@ -16,7 +16,7 @@ public class QuantityScreen extends JFrame implements ActionListener {
 
     public QuantityScreen() {
 
-        setTitle("Nerdy Gadgets - Bestelgegevens");
+        setTitle("Nerdy Gadgets - Voorraad");
         setSize(800, 500);
         setVisible(true);
 
@@ -26,7 +26,7 @@ public class QuantityScreen extends JFrame implements ActionListener {
         add(new JScrollPane(jtstock), BorderLayout.CENTER);
 
 
-        jbload = new JButton("Haal bestelgegevens op");
+        jbload = new JButton("Haal voorraad op");
         jbload.addActionListener(this);
         add(jbload, BorderLayout.PAGE_START);
 
@@ -43,7 +43,7 @@ public class QuantityScreen extends JFrame implements ActionListener {
                     return null;
                 }
             }.execute();
-            jbload.setText("Refresh bestelgegevens");
+            jbload.setText("Refresh voorraad");
         }
     }
 

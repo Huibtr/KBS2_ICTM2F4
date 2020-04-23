@@ -15,7 +15,7 @@ public class CustomerScreen extends JFrame implements ActionListener{
 
     public CustomerScreen() {
 
-        setTitle("Nerdy Gadgets - Klant gegevens");
+        setTitle("Nerdy Gadgets - Klantgegevens");
         setSize(800, 500);
         setVisible(true);
 
@@ -25,7 +25,7 @@ public class CustomerScreen extends JFrame implements ActionListener{
         add(new JScrollPane(jtcustomer), BorderLayout.CENTER);
 
 
-        jbload = new JButton("Haal klant gegevens op");
+        jbload = new JButton("Haal klantgegevens op");
         jbload.addActionListener(this);
         add(jbload, BorderLayout.PAGE_START);
 
@@ -42,7 +42,7 @@ public class CustomerScreen extends JFrame implements ActionListener{
                     return null;
                 }
             }.execute();
-            jbload.setText("Refresh klant gegevens");
+            jbload.setText("Refresh klantgegevens");
         }
     }
 
