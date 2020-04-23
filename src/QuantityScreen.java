@@ -18,19 +18,18 @@ public class QuantityScreen extends JFrame implements ActionListener {
     public QuantityScreen() {
 
         setTitle("Nerdy Gadgets - Voorraad");
-        setLayout(new GridLayout(3, 1));
         setSize(800, 500);
         setVisible(true);
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        jbGoBack = new JButton("< terug");
-        jbGoBack.addActionListener(this);
-        add(jbGoBack);
-
         jbload = new JButton("Haal voorraad op");
         jbload.addActionListener(this);
         add(jbload, BorderLayout.PAGE_START);
+
+        jbGoBack = new JButton("< terug");
+        jbGoBack.addActionListener(this);
+        add(jbGoBack, BorderLayout.SOUTH);
 
         jtstock = new JTable(tableModel);
         add(new JScrollPane(jtstock), BorderLayout.CENTER);

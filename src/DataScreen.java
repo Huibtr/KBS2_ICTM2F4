@@ -13,8 +13,8 @@ public class DataScreen extends JFrame implements ActionListener {
     public DataScreen(){
         setTitle("Nerdy Gadgets - gegevens inzien/ aanpassen");
         setSize(500, 300);
+        setLayout(new GridLayout(4,1));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new GridLayout(2,1));
 
         jbGoBack = new JButton("< terug");
         jbGoBack.addActionListener(this);

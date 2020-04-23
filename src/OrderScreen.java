@@ -18,14 +18,13 @@ public class OrderScreen extends JFrame implements ActionListener{
 
         setTitle("Nerdy Gadgets - Bestelgegevens");
         setSize(800, 500);
-        setLayout(new GridLayout(3,1));
         setVisible(true);
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         jbGoBack = new JButton("< terug");
         jbGoBack.addActionListener(this);
-        add(jbGoBack);
+        add(jbGoBack, BorderLayout.SOUTH);
 
         jbload = new JButton("Haal bestelgegevens op");
         jbload.addActionListener(this);
