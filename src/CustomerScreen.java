@@ -12,22 +12,27 @@ public class CustomerScreen extends JFrame implements ActionListener{
     private final JButton jbload;
     private final JTable jtcustomer;
     private final DefaultTableModel tableModel = new DefaultTableModel();
+    private JButton jbGoBack;
 
     public CustomerScreen() {
 
-        setTitle("Nerdy Gadgets - Klant gegevens");
+        setTitle("Nerdy Gadgets - Klantgegevens");
         setSize(800, 500);
+        setLayout(new GridLayout(3,1));
         setVisible(true);
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        jtcustomer = new JTable(tableModel);
-        add(new JScrollPane(jtcustomer), BorderLayout.CENTER);
+        jbGoBack = new JButton("< terug");
+        jbGoBack.addActionListener(this);
+        add(jbGoBack);
 
-
-        jbload = new JButton("Haal klant gegevens op");
+        jbload = new JButton("Haal klantgegevens op");
         jbload.addActionListener(this);
         add(jbload, BorderLayout.PAGE_START);
+
+        jtcustomer = new JTable(tableModel);
+        add(new JScrollPane(jtcustomer), BorderLayout.CENTER);
 
     }
 
@@ -42,7 +47,10 @@ public class CustomerScreen extends JFrame implements ActionListener{
                     return null;
                 }
             }.execute();
-            jbload.setText("Refresh klant gegevens");
+            jbload.setText("Refresh klantgegevens");
+        } else if(e.getSource() == jbGoBack) {
+            dispose();
+            DataScreen dataScreen = new DataScreen();
         }
     }
 

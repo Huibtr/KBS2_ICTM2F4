@@ -13,22 +13,27 @@ public class QuantityScreen extends JFrame implements ActionListener {
     private final JButton jbload;
     private final JTable jtstock;
     private final DefaultTableModel tableModel = new DefaultTableModel();
+    private JButton jbGoBack;
 
     public QuantityScreen() {
 
-        setTitle("Nerdy Gadgets - Bestelgegevens");
+        setTitle("Nerdy Gadgets - Voorraad");
+        setLayout(new GridLayout(3, 1));
         setSize(800, 500);
         setVisible(true);
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        jtstock = new JTable(tableModel);
-        add(new JScrollPane(jtstock), BorderLayout.CENTER);
+        jbGoBack = new JButton("< terug");
+        jbGoBack.addActionListener(this);
+        add(jbGoBack);
 
-
-        jbload = new JButton("Haal bestelgegevens op");
+        jbload = new JButton("Haal voorraad op");
         jbload.addActionListener(this);
         add(jbload, BorderLayout.PAGE_START);
+
+        jtstock = new JTable(tableModel);
+        add(new JScrollPane(jtstock), BorderLayout.CENTER);
 
     }
 
@@ -43,7 +48,10 @@ public class QuantityScreen extends JFrame implements ActionListener {
                     return null;
                 }
             }.execute();
-            jbload.setText("Refresh bestelgegevens");
+            jbload.setText("Refresh voorraad");
+        } else if(e.getSource() == jbGoBack) {
+            dispose();
+            DataScreen dataScreen = new DataScreen();
         }
     }
 
