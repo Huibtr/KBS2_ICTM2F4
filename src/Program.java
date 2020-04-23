@@ -8,5 +8,6 @@ public class Program {
         TSP tsp = new TSP();
         tsp.addcordinaten();
         tsp.getcordinaten();
+        tsp.berekenAfstand();
     }
 }
