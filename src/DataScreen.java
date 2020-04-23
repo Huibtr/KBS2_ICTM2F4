@@ -8,12 +8,17 @@ public class DataScreen extends JFrame implements ActionListener {
     private JButton jbQuantity;
     private JButton jbOrders;
     private JButton jbCustomers;
+    private JButton jbGoBack;
 
     public DataScreen(){
         setTitle("Nerdy Gadgets - gegevens inzien/ aanpassen");
         setSize(500, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridLayout(2,1));
+
+        jbGoBack = new JButton("< terug");
+        jbGoBack.addActionListener(this);
+        add(jbGoBack);
 
         jbQuantity = new JButton("voorraad");
         jbQuantity.addActionListener(this);
@@ -41,6 +46,9 @@ public class DataScreen extends JFrame implements ActionListener {
         } else if(e.getSource() == jbCustomers){
             CustomerScreen customerScreen = new CustomerScreen();
             dispose();
+        } else if(e.getSource() == jbGoBack) {
+            dispose();
+            HomeScreen homeScreen = new HomeScreen();
         }
     }
 }
