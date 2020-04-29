@@ -43,61 +43,52 @@ public class TSP {
         int startCoordinate = 0;
         int startX = 0;
         int startY = 0;
-        ArrayList<Integer> reached = new ArrayList<>();
-        reached.add(0);
         double berekening;
+        double distance;
+        int kosteIndex = 0;
+        int[][] cordinate = new int[cordinaat_y.size()][cordinaat_x.size()];
 
-        for(int route = 0; route<cordinaat_y.size();route++) {
-            int index = 0;
-            double distance = 1000;
-            boolean isReached = false;
-
-            // for(int i) zoekt de kortste afstand naar het eerst volgende punt die nog niet geweest is
-            for (int i = 0; i < cordinaat_y.size(); i++) {
-
-                for (int g = 0; g < reached.size(); g++) {
-                    if(reached.get(g) == i) {
-                        isReached = true;
-                        break;
-                    }else{
-                        isReached = false;
-                    }
+        for (int i = 0; i < cordinaat_x.size(); i++){
+            for(int j = 0; j < 2; j++){
+                if(j == 0){
+                    cordinate[i][j] = cordinaat_x.get(i);
+                }else {
+                    cordinate[i][j] = cordinaat_y.get(i);
                 }
+            }
+        }
 
-                if(!isReached) {
-                    if (startCoordinate != i) {
-                        int x = cordinaat_x.get(i);
-                        int y = cordinaat_y.get(i);
+        //for (int i = 0; i < cordinate.length; i++){
+        //    for (int j = 0; j < 2; j++){
+        //       System.out.println("cordinate[" + i + "][" + j + "] = " + cordinate[i][j]);
+        //    }
+        //}
 
+        for (int punt = 0; punt < cordinate.length; punt++){
+            distance = 1000;
+            for(int index = 0; index < cordinate.length; index ++) {
+                if (index != punt) {
+                    double tussenberekening_x = cordinate[punt][0] - cordinate[index][0];
+                    double tussenberekening_y = cordinate[punt][1] - cordinate[index][1];
+                    if (tussenberekening_x < 0) {
+                        tussenberekening_x = -tussenberekening_x;
+                    }
+                    if (tussenberekening_y < 0) {
+                        tussenberekening_y = -tussenberekening_y;
+                    }
 
-                        double tussenberekening_x = startX - x;
-                        double tussenberekening_y = startY - y;
-                        if (tussenberekening_x < 0) {
-                            tussenberekening_x = -tussenberekening_x;
-                        }
-                        if (tussenberekening_y < 0) {
-                            tussenberekening_y = -tussenberekening_y;
-                        }
+                    berekening = sqrt(Math.pow(tussenberekening_x, 2) + Math.pow(tussenberekening_y, 2));
 
-                        berekening = sqrt(Math.pow(tussenberekening_x, 2) + Math.pow(tussenberekening_y, 2));
-
-                        if (berekening < distance) {
-                            distance = berekening;
-                            index = i;
-                        }
+                    if (berekening < distance) {
+                        distance = berekening;
+                        kosteIndex = index;
                     }
                 }
             }
-
-            startCoordinate = index;
-            reached.add(startCoordinate);
-            startX = cordinaat_x.get(index);
-            startY = cordinaat_y.get(index);
-            System.out.println(distance + " | " + index);
+            //System.out.println("vanaf punt  " + cordinate[punt][0] + " "+ cordinate[punt][1] + " -> " + cordinate[kosteIndex][0] + " " + cordinate[kosteIndex][1] + " = " + distance);
+            System.out.println("vanaf punt  " + punt + " -> " + kosteIndex + " = " + distance);
 
         }
-
-
-
+        
         }
     }
