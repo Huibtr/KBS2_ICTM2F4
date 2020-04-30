@@ -9,10 +9,21 @@ import static java.lang.Math.sqrt;
 public class TSP {
     public ArrayList<Integer> cordinaat_x;
     public ArrayList<Integer> cordinaat_y;
+    // 2D array
+
+    //MST algoritme
+    ArrayList<Integer> isReached;
+    //Odd Degree
+    ArrayList<Integer> oddDegree;
+    //Perfect Matching
+    ArrayList<Integer> perfectMatching;
 
     public TSP(){
         cordinaat_x = new ArrayList<>();
         cordinaat_y = new ArrayList<>();
+        isReached = new ArrayList<>();
+        oddDegree = new ArrayList<>();
+        perfectMatching = new ArrayList<>();
     }
 
     public void addcordinaten() throws SQLException {
@@ -41,37 +52,35 @@ public class TSP {
 
     public void berekenAfstand(){
         //prim algoritme
-        double berekening;
+        //int[][] cordinate = new int[cordinaat_y.size()][cordinaat_x.size()];
         double distance;
         int kosteIndex = 0;
         int begin = 0;
         boolean skip;
-        int[][] cordinate = new int[cordinaat_y.size()][cordinaat_x.size()];
-        ArrayList<Integer> isReached = new ArrayList<>();
         isReached.add(0);
 
-        //Odd Degree
-        ArrayList<Integer> oddDegree = new ArrayList<>();
+        // maakt van een array een 2D array
+//        for (int i = 0; i < cordinaat_x.size(); i++){
+//            for(int j = 0; j < 2; j++){
+//                if(j == 0){
+//                    cordinate[i][j] = cordinaat_x.get(i);
+//                }else {
+//                    cordinate[i][j] = cordinaat_y.get(i);
+//                }
+//            }
+//        }
 
-
-        for (int i = 0; i < cordinaat_x.size(); i++){
-            for(int j = 0; j < 2; j++){
-                if(j == 0){
-                    cordinate[i][j] = cordinaat_x.get(i);
-                }else {
-                    cordinate[i][j] = cordinaat_y.get(i);
-                }
-            }
-        }
-
-        for(int eerste = 0; eerste < cordinate.length - 1; eerste++){
+        //1. Prim algritme
+        for(int eerste = 0; eerste < cordinaat_x.size() - 1; eerste++){
             distance = 1000;
             for (int reached = 0; reached < isReached.size(); reached++) {
                 skip = false;
-                for (int index = 0; index < cordinate.length; index++) {
-                    if (index != reached) {
+                for (int index = 0; index < cordinaat_x.size(); index++) {
+                    int reachedIndex = isReached.get(reached);
+                    if (index != reachedIndex) {
                         for(int check = 0; check < isReached.size(); check++){
-                            if(index == check){
+                            int getcheck = isReached.get(check);
+                            if(index == getcheck){
                                 skip = true;
                                 break;
                             }
@@ -80,20 +89,11 @@ public class TSP {
                             }
                         }
                         if(skip != true){
-                            double tussenberekening_x = cordinate[reached][0] - cordinate[index][0];
-                            double tussenberekening_y = cordinate[reached][1] - cordinate[index][1];
-                            if (tussenberekening_x < 0) {
-                                tussenberekening_x = -tussenberekening_x;
-                            }
-                            if (tussenberekening_y < 0) {
-                                tussenberekening_y = -tussenberekening_y;
-                            }
+                            double getDistance = getDistance(reachedIndex, index);
 
-                            berekening = sqrt(Math.pow(tussenberekening_x, 2) + Math.pow(tussenberekening_y, 2));
-
-                            if (berekening < distance) {
-                                distance = berekening;
-                                begin = reached;
+                            if (getDistance < distance) {
+                                distance = getDistance;
+                                begin = reachedIndex;
                                 kosteIndex = index;
                             }
                         }
@@ -110,23 +110,43 @@ public class TSP {
         }
 
 
-        // zoekt de punten met de de oneven hoeken
+        //2. Odd Degree Vertices
         int teller;
-        int indexOddDegree;
-        for(int calOddDegree = 0; calOddDegree < oddDegree.size(); calOddDegree++){
+        for(int indexOddDegree = 0; indexOddDegree < oddDegree.size(); indexOddDegree++){
             teller = 0;
             for(int i = 0; i< oddDegree.size(); i++){
-                if(oddDegree.get(i)==calOddDegree){
+                if(oddDegree.get(i)==indexOddDegree){
                     teller = teller + 1;
                 }
             }
             if ( teller % 2 != 0 ){
-                indexOddDegree = calOddDegree;
-                System.out.println( teller + " aantal hoeken op index " + indexOddDegree);
-
+                perfectMatching.add(indexOddDegree);
             }
         }
 
 
+        //3. Perfect Matching
+        for(int perfectIndex = 0; perfectIndex < perfectMatching.size(); perfectIndex++){
+            System.out.println(perfectMatching.get(perfectIndex));
+        }
+
+
+        }
+
+        public double getDistance(int beginIndex, int endIndex){
+            double distance;
+
+            double tussenberekening_x = cordinaat_x.get(beginIndex) - cordinaat_x.get(endIndex);
+            double tussenberekening_y = cordinaat_y.get(beginIndex) - cordinaat_y.get(endIndex);
+            if (tussenberekening_x < 0) {
+                tussenberekening_x = -tussenberekening_x;
+            }
+            if (tussenberekening_y < 0) {
+                tussenberekening_y = -tussenberekening_y;
+            }
+
+            distance = sqrt(Math.pow(tussenberekening_x, 2) + Math.pow(tussenberekening_y, 2));
+
+            return distance;
         }
     }
