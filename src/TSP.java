@@ -7,10 +7,7 @@ import static java.lang.Math.exp;
 import static java.lang.Math.sqrt;
 
 public class TSP {
-    public ArrayList<Integer> cordinaat_x;
-    public ArrayList<Integer> cordinaat_y;
-    // 2D array
-
+    public ArrayList<Coordination> listCoordinates;
     //MST algoritme
     ArrayList<Integer> isReached;
     //Odd Degree
@@ -19,8 +16,7 @@ public class TSP {
     ArrayList<Integer> perfectMatching;
 
     public TSP(){
-        cordinaat_x = new ArrayList<>();
-        cordinaat_y = new ArrayList<>();
+        listCoordinates = new ArrayList<>();
         isReached = new ArrayList<>();
         oddDegree = new ArrayList<>();
         perfectMatching = new ArrayList<>();
@@ -31,51 +27,41 @@ public class TSP {
         ResultSet resultSet = dbConnection.getCoordinates();
 
         //start reached van Nerdy Gadgets
-        cordinaat_x.add(0);
-        cordinaat_y.add(0);
+        Coordination coordination;
+        coordination = new Coordination(0,0);
+        listCoordinates.add(coordination);
 
 
         while(resultSet.next()){
             int x = resultSet.getInt("X");
             int y = resultSet.getInt("Y");
-            cordinaat_x.add(x);
-            cordinaat_y.add(y);
+
+            coordination = new Coordination(x,y);
+            listCoordinates.add(coordination);
         }
     }
 
     public void getcordinaten() {
-        for(int i = 0; i<cordinaat_y.size();i++){
-            System.out.println("[" + cordinaat_x.get(i) + "] " + "[" + cordinaat_y.get(i) + "]");
+        for(int i = 0; i<listCoordinates.size();i++){
+            System.out.println("[" + listCoordinates.get(i).getX() + "] " + "[" + listCoordinates.get(i).getY() + "]");
         }
 
     }
 
     public void berekenAfstand(){
         //prim algoritme
-        //int[][] cordinate = new int[cordinaat_y.size()][cordinaat_x.size()];
         double distance;
         int kosteIndex = 0;
         int begin = 0;
         boolean skip;
         isReached.add(0);
 
-        // maakt van een array een 2D array
-//        for (int i = 0; i < cordinaat_x.size(); i++){
-//            for(int j = 0; j < 2; j++){
-//                if(j == 0){
-//                    cordinate[i][j] = cordinaat_x.get(i);
-//                }else {
-//                    cordinate[i][j] = cordinaat_y.get(i);
-//                }
-//            }
-//        }
-
         //1. Prim algritme
-        for(int eerste = 0; eerste < cordinaat_x.size() - 1; eerste++){
+        for(int eerste = 0; eerste < listCoordinates.size() - 1; eerste++){
             distance = 1000;
             for (int reached = 0; reached < isReached.size(); reached++) {
                 skip = false;
-                for (int index = 0; index < cordinaat_x.size(); index++) {
+                for (int index = 0; index < listCoordinates.size(); index++) {
                     int reachedIndex = isReached.get(reached);
                     if (index != reachedIndex) {
                         for(int check = 0; check < isReached.size(); check++){
@@ -102,7 +88,7 @@ public class TSP {
 
 
             }
-            System.out.println("vanaf reached  " + begin + " -> " + kosteIndex + " = " + distance);
+            System.out.println((eerste + 1) + ". van punt " + begin + " naar punt " + kosteIndex + " is " + distance);
             isReached.add(kosteIndex);
 
             oddDegree.add(begin);
@@ -126,6 +112,7 @@ public class TSP {
 
 
         //3. Perfect Matching
+
         for(int perfectIndex = 0; perfectIndex < perfectMatching.size(); perfectIndex++){
             System.out.println(perfectMatching.get(perfectIndex));
         }
@@ -136,8 +123,8 @@ public class TSP {
         public double getDistance(int beginIndex, int endIndex){
             double distance;
 
-            double tussenberekening_x = cordinaat_x.get(beginIndex) - cordinaat_x.get(endIndex);
-            double tussenberekening_y = cordinaat_y.get(beginIndex) - cordinaat_y.get(endIndex);
+            double tussenberekening_x = listCoordinates.get(beginIndex).getX() - listCoordinates.get(endIndex).getX();
+            double tussenberekening_y = listCoordinates.get(beginIndex).getY() - listCoordinates.get(endIndex).getY();
             if (tussenberekening_x < 0) {
                 tussenberekening_x = -tussenberekening_x;
             }

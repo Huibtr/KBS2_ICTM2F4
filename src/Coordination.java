@@ -1,17 +1,19 @@
 import java.util.ArrayList;
 
 public class Coordination {
-    private ArrayList<Integer> coordination;
+    private int x;
+    private int y;
 
-    public Coordination(){
-        coordination = new ArrayList<>();
+    public Coordination(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
-    public void AddCoordination(Integer coordination){
-        this.coordination.add(coordination);
+    public int getX() {
+        return x;
     }
 
-    public ArrayList<Integer> getCoordination() {
-        return coordination;
+    public int getY() {
+        return y;
     }
 }

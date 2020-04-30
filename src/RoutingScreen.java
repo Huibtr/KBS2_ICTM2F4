@@ -11,7 +11,6 @@ public class RoutingScreen extends JFrame implements ActionListener {
     public RoutingScreen(){
         setLayout(new FlowLayout());
         setSize(530, 500);
-        coordination = new Coordination();
         RoutingPanel panel = new RoutingPanel(coordination);
         add(panel);
         jbAdd = new JButton("toevoegen");
@@ -25,10 +24,6 @@ public class RoutingScreen extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == jbAdd) {
-            coordination.AddCoordination(10);
-            for (Integer test : coordination.getCoordination()) {
-                System.out.println(test);
-            }
         }
         repaint();
     }
