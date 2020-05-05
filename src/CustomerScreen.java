@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.Vector;
 
 
-public class CustomerScreen extends JFrame implements ActionListener{
+public class CustomerScreen extends JFrame implements ActionListener {
     public ResultSet result;
     private final JButton jbload;
     private final JTable jtcustomer;
