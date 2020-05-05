@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -6,81 +8,78 @@ import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Vector;
 
-public class QuantityScreen extends JFrame implements ActionListener {
-    public ResultSet result;
-    private final JButton jbload;
-    private final JTable jtstock;
+public class QuantityScreen extends JFrame {
+    private ArrayList<Quantity> quantities;
     private final DefaultTableModel tableModel = new DefaultTableModel();
     private JButton jbGoBack;
 
     public QuantityScreen() {
+            getQuantity();
+            JTable table = new JTable();
 
-        setTitle("Nerdy Gadgets - Voorraad");
-        setSize(800, 500);
-        setVisible(true);
+            DefaultTableModel model = new DefaultTableModel();
 
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+            Object[] columnsName = new Object[] {
+                    "Product naam", "Product nummer", "aantal"
+            };
 
-        jbload = new JButton("Haal voorraad op");
-        jbload.addActionListener(this);
-        add(jbload, BorderLayout.PAGE_START);
+            model.setColumnIdentifiers(columnsName);
 
-        jbGoBack = new JButton("< terug");
-        jbGoBack.addActionListener(this);
-        add(jbGoBack, BorderLayout.SOUTH);
+            Object[] rowData = new Object[3];
 
-        jtstock = new JTable(tableModel);
-        add(new JScrollPane(jtstock), BorderLayout.CENTER);
+            for(int i = 0; i < quantities.size(); i++){
 
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == jbload){
-            System.out.println("refresh data");
-            new SwingWorker<Void, Void>() {
-                @Override
-                protected Void doInBackground() throws Exception {
-                    loadData();
-                    return null;
-                }
-            }.execute();
-            jbload.setText("Refresh voorraad");
-        } else if(e.getSource() == jbGoBack) {
-            dispose();
-            DataScreen dataScreen = new DataScreen();
-        }
-    }
-
-    private void loadData() throws SQLException {
-
-        jbload.setEnabled(false);
-
-        DBConnection dbConnection = new DBConnection();
-        ResultSet rs = dbConnection.getQuantity();
-        ResultSetMetaData metaData = rs.getMetaData();
-
-        // naam van de kolommen
-        Vector<String> columnNames = new Vector<>();
-        int columnCount = metaData.getColumnCount();
-        for (int i = 1; i <= columnCount; i++) {
-            columnNames.add(metaData.getColumnName(i));
-        }
-
-        // gegevens uit de data base
-        Vector<Vector<Object>> data = new Vector<>();
-        while (rs.next()) {
-            Vector<Object> vector = new Vector<>();
-            for (int i = 1; i <= columnCount; i++) {
-                vector.add(rs.getObject(i));
+                rowData[0] = quantities.get(i).getStockItemName();
+                rowData[1] = quantities.get(i).getStockItemID();
+                rowData[2] = quantities.get(i).getQuantityOnHand();
+                model.addRow(rowData);
             }
-            data.add(vector);
+
+            table.setModel(model);
+
+            //add the table to the frame
+            this.add(new JScrollPane(table));
+
+            this.setTitle("Table Example");
+            this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            this.pack();
+            this.setVisible(true);
+
+            ListSelectionModel modelclick = table.getSelectionModel();
+            modelclick.addListSelectionListener(new ListSelectionListener() {
+                @Override
+                public void valueChanged(ListSelectionEvent listSelectionEvent) {
+                    if (!modelclick.isSelectionEmpty()){
+                        int selectrow = modelclick.getMinSelectionIndex();
+                        JOptionPane.showMessageDialog(null, selectrow);
+                    }
+                }
+            });
+
+
         }
 
-        tableModel.setDataVector(data, columnNames);
-        jbload.setEnabled(true);
+    public void getQuantity(){
+        quantities = new ArrayList<>();
+        Quantity quantity;
+        try {
+            DBConnection dbConnection = new DBConnection();
+            ResultSet rs = dbConnection.getQuantity();
 
+            while(rs.next()){
+                quantity = new Quantity(
+                        rs.getString("StockItemName"),
+                        rs.getInt("StockItemID"),
+                        rs.getInt("QuantityOnHand")
+                );
+                quantities.add(quantity);
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
     }
 }
