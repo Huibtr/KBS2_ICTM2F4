@@ -1,86 +1,83 @@
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.*;
-import java.util.Vector;
+import java.util.ArrayList;
 
-
-public class OrderScreen extends JFrame implements ActionListener{
-    public ResultSet result;
-    private final JButton jbload;
-    private final JTable jtorder;
-    private final DefaultTableModel tableModel = new DefaultTableModel();
-    private JButton jbGoBack;
+public class OrderScreen extends JFrame{
+    private ArrayList<Order> orders;
 
     public OrderScreen() {
+        getOrder();
+        JTable table = new JTable();
 
-        setTitle("Nerdy Gadgets - Bestelgegevens");
-        setSize(800, 500);
-        setVisible(true);
+        DefaultTableModel model = new DefaultTableModel();
 
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        Object[] columnsName = new Object[] {
+                "KlantID", "BestellingID", "ProductID", "Voorraad"
+        };
 
-        jbGoBack = new JButton("< terug");
-        jbGoBack.addActionListener(this);
-        add(jbGoBack, BorderLayout.SOUTH);
+        model.setColumnIdentifiers(columnsName);
 
-        jbload = new JButton("Haal bestelgegevens op");
-        jbload.addActionListener(this);
-        add(jbload, BorderLayout.PAGE_START);
+        Object[] rowData = new Object[4];
 
-        jtorder = new JTable(tableModel);
-        add(new JScrollPane(jtorder), BorderLayout.CENTER);
+        for(int i = 0; i < orders.size(); i++){
 
-    }
+            rowData[0] = orders.get(i).getCustomerID();
+            rowData[1] = orders.get(i).getOrderID();
+            rowData[2] = orders.get(i).getStockItemID();
+            rowData[3] = orders.get(i).getQuantity();
+            model.addRow(rowData);
+        }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == jbload){
-            System.out.println("refresh data");
-            new SwingWorker<Void, Void>() {
-                @Override
-                protected Void doInBackground() throws Exception {
-                    loadData();
-                    return null;
+        table.setModel(model);
+
+        //add the table to the frame
+        this.add(new JScrollPane(table));
+
+        this.setTitle("Table Example");
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.pack();
+        this.setVisible(true);
+
+        ListSelectionModel modelclick = table.getSelectionModel();
+        modelclick.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent listSelectionEvent) {
+                if (!modelclick.isSelectionEmpty()){
+                    int selectrow = modelclick.getMinSelectionIndex();
+                    JOptionPane.showMessageDialog(null, selectrow);
                 }
-            }.execute();
-            jbload.setText("Refresh bestelgegevens");
-        } else if(e.getSource() == jbGoBack) {
-            dispose();
-            DataScreen dataScreen = new DataScreen();
-        }
+            }
+        });
+
     }
 
-    private void loadData() throws SQLException {
+    public void getOrder(){
 
-        jbload.setEnabled(false);
+        orders = new ArrayList<>();
+        Order order;
+        try {
 
-        DBConnection dbConnection = new DBConnection();
-        ResultSet rs = dbConnection.getOrderlines();
-        ResultSetMetaData metaData = rs.getMetaData();
+            DBConnection dbConnection = new DBConnection();
+            ResultSet rs = dbConnection.getOrderlines();
 
-        // naam van de kolommen
-        Vector<String> columnNames = new Vector<>();
-        int columnCount = metaData.getColumnCount();
-        for (int i = 1; i <= columnCount; i++) {
-            columnNames.add(metaData.getColumnName(i));
-        }
+            while(rs.next()){
 
-        // gegevens uit de data base
-        Vector<Vector<Object>> data = new Vector<>();
-        while (rs.next()) {
-            Vector<Object> vector = new Vector<>();
-            for (int i = 1; i <= columnCount; i++) {
-                vector.add(rs.getObject(i));
+                order = new Order(
+                        rs.getInt("CustomerID"),
+                        rs.getInt("OrderID"),
+                        rs.getInt("StockItemID"),
+                        rs.getInt("Quantity")
+                );
+
+                orders.add(order);
             }
-            data.add(vector);
+
+        } catch (SQLException ex) {
+            System.out.println(ex);
         }
-
-        tableModel.setDataVector(data, columnNames);
-        jbload.setEnabled(true);
-
     }
 
 
