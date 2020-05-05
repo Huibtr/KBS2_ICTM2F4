@@ -36,7 +36,7 @@ public class OrderScreen extends JFrame{
         //add the table to the frame
         this.add(new JScrollPane(table));
 
-        this.setTitle("Table Example");
+        this.setTitle("NerdyGadgets - Bestellingen");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
         this.setVisible(true);
@@ -46,8 +46,18 @@ public class OrderScreen extends JFrame{
             @Override
             public void valueChanged(ListSelectionEvent listSelectionEvent) {
                 if (!modelclick.isSelectionEmpty()){
+                    int orderID = 0;
                     int selectrow = modelclick.getMinSelectionIndex();
-                    JOptionPane.showMessageDialog(null, selectrow);
+                    for (int i = 0; i < orders.size(); i++){
+                        if(i == selectrow){
+                            orderID = orders.get(i).getOrderID();
+                        }
+                    }
+                    try {
+                        OrderInfoScreen orderInfoScreen = new OrderInfoScreen(orderID);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });

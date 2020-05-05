@@ -15,7 +15,7 @@ public class DBConnection {
             Connection connection = DriverManager.getConnection(url, username, password);
             Statement query = connection.createStatement();
 
-             result = query.executeQuery("select CustomerID, CustomerName, DeliveryAddressLine1, CityName, DeliveryPostalCode, PhoneNumber from customers inner join cities where customers.DeliveryCityID =  cities.CityID;");
+             result = query.executeQuery("select CustomerID, CustomerName, CityName, DeliveryAddressLine2, DeliveryPostalCode, PhoneNumber from customers inner join cities where customers.DeliveryCityID =  cities.CityID;");
 
         }
         catch (ClassNotFoundException ex){
@@ -34,7 +34,7 @@ public class DBConnection {
             Connection connection = DriverManager.getConnection(url, username, password);
             Statement query = connection.createStatement();
 
-            result = query.executeQuery("select CustomerID, CustomerName, DeliveryAddressLine1, CityName, DeliveryPostalCode, PhoneNumber from customers inner join cities where customers.DeliveryCityID =  cities.CityID and customers.CustomerID ="+ customerID +";");
+            result = query.executeQuery("select CustomerID, CustomerName, CityName, DeliveryAddressLine2, DeliveryPostalCode, PhoneNumber from customers inner join cities where customers.DeliveryCityID =  cities.CityID and customers.CustomerID ="+ customerID +";");
 
         }
         catch (ClassNotFoundException ex){
@@ -54,6 +54,25 @@ public class DBConnection {
             Statement query = connection.createStatement();
 
             result = query.executeQuery("SELECT orders.CustomerID, orders.OrderID, orderlines.StockitemID, orderlines.Quantity FROM orderlines LEFT JOIN orders ON orders.OrderID=orderlines.OrderID Where CustomerID < 4;");
+
+        }
+        catch (ClassNotFoundException ex){
+            Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE,null, ex);
+        }
+        catch (SQLException ex){
+            Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE,null, ex);
+            ex.printStackTrace();
+        }
+        return result;
+    }
+
+    public ResultSet getOrdersInfo(int orderID){
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(url, username, password);
+            Statement query = connection.createStatement();
+
+            result = query.executeQuery("SELECT orders.CustomerID, orders.OrderID, orderlines.StockitemID, orderlines.Quantity FROM orderlines LEFT JOIN orders ON orders.OrderID=orderlines.OrderID Where CustomerID < 4 and orders.OrderID =" + orderID + ";");
 
         }
         catch (ClassNotFoundException ex){

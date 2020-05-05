@@ -13,15 +13,15 @@ public class CustomerScreen extends JFrame {
         JTable table = new JTable();
         DefaultTableModel model = new DefaultTableModel();
         Object[] columnsName = new Object[] {
-                "KlantID", "Klantnaam", "Adres", "Stadsnaam", "Postcode", "Telefoonnummer"
+                "KlantID", "Klantnaam", "Stadsnaam", "Adres", "Postcode", "Telefoonnummer"
         };
         model.setColumnIdentifiers(columnsName);
         Object[] rowData = new Object[6];
         for(int i = 0; i < customers.size(); i++){
             rowData[0] = customers.get(i).getCustomerID();
             rowData[1] = customers.get(i).getCustomerName();
-            rowData[2] = customers.get(i).getDeliveryAddressLine1();
-            rowData[3] = customers.get(i).getCityName();
+            rowData[2] = customers.get(i).getCityName();
+            rowData[3] = customers.get(i).getDeliveryAddressLine2();
             rowData[4] = customers.get(i).getDeliveryPostalCode();
             rowData[5] = customers.get(i).getPhoneNumber();
             model.addRow(rowData);
@@ -29,7 +29,7 @@ public class CustomerScreen extends JFrame {
         table.setModel(model);
         //add the table to the frame
         this.add(new JScrollPane(table));
-        this.setTitle("Table Example");
+        this.setTitle("NerdyGadgets - Klantgegevens");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
         this.setVisible(true);
@@ -64,8 +64,8 @@ public class CustomerScreen extends JFrame {
                 customer = new Customer(
                         rs.getInt("CustomerID"),
                         rs.getString("CustomerName"),
-                        rs.getString("DeliveryAddressLine1"),
                         rs.getString("CityName"),
+                        rs.getString("DeliveryAddressLine2"),
                         rs.getString("DeliveryPostalCode"),
                         rs.getString("PhoneNumber")
                 );

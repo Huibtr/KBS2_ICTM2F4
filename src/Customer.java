@@ -1,16 +1,16 @@
 public class Customer {
     private int customerID;
     private String customerName;
-    private String deliveryAddressLine1;
     private String cityName;
+    private String deliveryAddressLine2;
     private String deliveryPostalCode;
     private String phoneNumber;
 
-    public Customer (int customerID, String customerName, String deliveryAddressLine1, String cityName, String deliveryPostalCode, String phoneNumber) {
+    public Customer (int customerID, String customerName,  String cityName, String deliveryAddressLine2, String deliveryPostalCode, String phoneNumber) {
         this.customerID = customerID;
         this.customerName = customerName;
-        this.deliveryAddressLine1 = deliveryAddressLine1;
         this.cityName = cityName;
+        this.deliveryAddressLine2 = deliveryAddressLine2;
         this.deliveryPostalCode = deliveryPostalCode;
         this.phoneNumber = phoneNumber;
     }
@@ -24,13 +24,14 @@ public class Customer {
         return customerName;
     }
 
-    public String getDeliveryAddressLine1() {
-        return deliveryAddressLine1;
-    }
-
     public String getCityName() {
         return cityName;
     }
+
+    public String getDeliveryAddressLine2() {
+        return deliveryAddressLine2;
+    }
+
 
     public String getDeliveryPostalCode() {
         return deliveryPostalCode;
