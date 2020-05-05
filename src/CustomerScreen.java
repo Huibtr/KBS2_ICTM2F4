@@ -38,8 +38,18 @@ public class CustomerScreen extends JFrame {
             @Override
             public void valueChanged(ListSelectionEvent listSelectionEvent) {
                 if (!modelclick.isSelectionEmpty()){
+                    int customerID = 0;
                     int selectrow = modelclick.getMinSelectionIndex();
-                    JOptionPane.showMessageDialog(null, selectrow);
+                    for (int i = 0; i < customers.size(); i++){
+                        if(i == selectrow){
+                            customerID = customers.get(i).getCustomerID();
+                        }
+                    }
+                    try {
+                        CustomerInfoScreen customerInfoScreen = new CustomerInfoScreen(customerID);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
