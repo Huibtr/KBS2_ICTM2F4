@@ -6,16 +6,16 @@ import java.awt.event.ActionListener;
 public class RoutingScreen extends JFrame implements ActionListener {
     private Coordination coordination;
     private JTable gegevens;
-    private JButton jbAdd;
+    private JButton jbBack;
 
     public RoutingScreen(){
         setLayout(new FlowLayout());
         setSize(530, 500);
         RoutingPanel panel = new RoutingPanel(coordination);
         add(panel);
-        jbAdd = new JButton("toevoegen");
-        jbAdd.addActionListener(this);
-        add(jbAdd);
+        jbBack = new JButton("terug");
+        jbBack.addActionListener(this);
+        add(jbBack);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         setVisible(true);
@@ -23,9 +23,11 @@ public class RoutingScreen extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == jbAdd) {
+        if (e.getSource() == jbBack) {
+            dispose();
+            HomeScreen homeScreen = new HomeScreen();
         }
-        repaint();
+
     }
 
 }
