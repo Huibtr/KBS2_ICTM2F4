@@ -110,7 +110,32 @@ public class DBConnection {
             Connection connection = DriverManager.getConnection(url, username, password);
             Statement query = connection.createStatement();
 
-            result = query.executeQuery("select X, Y from address_coordinate;");
+            result = query.executeQuery("SELECT X,Y FROM address_coordinate\n" +
+                    "JOIN orders ON orders.CustomerID = address_coordinate.CustomerID\n" +
+                    "WHERE Provincie = \"Utrecht\" ");
+
+        }
+        catch (ClassNotFoundException ex){
+            Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE,null, ex);
+        }
+        catch (SQLException ex){
+            Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE,null, ex);
+            ex.printStackTrace();
+        }
+        return result;
+    }
+
+    public ResultSet getRouteInfo(String provincie){
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(url, username, password);
+            Statement query = connection.createStatement();
+
+            result = query.executeQuery("SELECT customers.CustomerName, customers.DeliveryAddressLine1, cities.CityName, orders.OrderID \n" +
+                    "FROM customers\n" +
+                    "JOIN orders ON customers.CustomerID = orders.CustomerID\n" +
+                    "JOIN cities ON customers.DeliveryCityID = cities.CityID\n" +
+                    "WHERE customers.Provincie = " +'\u0022' +  provincie + '\u0022' + ";");
 
         }
         catch (ClassNotFoundException ex){
