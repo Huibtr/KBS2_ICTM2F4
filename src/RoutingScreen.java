@@ -14,14 +14,18 @@ public class RoutingScreen extends JFrame implements ActionListener {
     private ArrayList<Route> routelijst;
     private String[] provincies;
     private JComboBox provincielijst;
+    ComboBoxProvincies provinciesBox;
 
     public RoutingScreen(){
+        DBConnection dbConnection = new DBConnection();
         setLayout(new BorderLayout());
-        provincies = new String[] {"Zeeland", "Limburg", "Noord-Brabant", "Friesland", "Noord-Holland", "Zuid-Holland", "Drenthe",
-                                    "Gelderland", "Flevoland", "Groningen", "Utrecht", "Overijssel"};
-        provincielijst = new JComboBox(provincies);
-        provincielijst.setSelectedIndex(11);
-        add(provincielijst, BorderLayout.PAGE_START);
+        provinciesBox = new ComboBoxProvincies();
+       add(provinciesBox, BorderLayout.PAGE_START);
+       dbConnection.getRouteInfo(provinciesBox.getProvincieNaam());
+
+
+
+
 
         setSize(530, 500);
         RoutingPanel panel = new RoutingPanel(coordination);
@@ -62,7 +66,7 @@ public class RoutingScreen extends JFrame implements ActionListener {
         Route route;
         try {
             DBConnection dbConnection = new DBConnection();
-            ResultSet rs = dbConnection.getRouteInfo("Utrecht");
+            ResultSet rs = dbConnection.getRouteInfo(provinciesBox.getProvincieNaam());
             while(rs.next()){
                 route = new Route(
                         rs.getString("CustomerName"),
