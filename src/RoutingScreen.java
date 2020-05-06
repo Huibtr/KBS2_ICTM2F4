@@ -16,18 +16,19 @@ public class RoutingScreen extends JFrame implements ActionListener {
     private JComboBox provincielijst;
 
     public RoutingScreen(){
+        setLayout(new BorderLayout());
         provincies = new String[] {"Zeeland", "Limburg", "Noord-Brabant", "Friesland", "Noord-Holland", "Zuid-Holland", "Drenthe",
                                     "Gelderland", "Flevoland", "Groningen", "Utrecht", "Overijssel"};
         provincielijst = new JComboBox(provincies);
         provincielijst.setSelectedIndex(11);
-        add(provincielijst);
-        setLayout(new FlowLayout());
+        add(provincielijst, BorderLayout.PAGE_START);
+
         setSize(530, 500);
         RoutingPanel panel = new RoutingPanel(coordination);
-        add(panel);
-        jbBack = new JButton("terug");
-        jbBack.addActionListener(this);
-        add(jbBack);
+        add(panel, BorderLayout.LINE_START);
+//        jbBack = new JButton("terug");
+//        jbBack.addActionListener(this);
+//        add(jbBack, BorderLayout.PAGE_START);
 
 
 
@@ -48,7 +49,7 @@ public class RoutingScreen extends JFrame implements ActionListener {
         }
         table.setModel(model);
         //add the table to the frame
-        this.add(new JScrollPane(table));
+        this.add(new JScrollPane(table), BorderLayout.PAGE_END);
         this.setTitle("NerdyGadgets - Klantgegevens");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
