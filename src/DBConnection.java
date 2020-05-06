@@ -135,7 +135,7 @@ public class DBConnection {
                     "FROM customers\n" +
                     "JOIN orders ON customers.CustomerID = orders.CustomerID\n" +
                     "JOIN cities ON customers.DeliveryCityID = cities.CityID\n" +
-                    "WHERE customers.Provincie = " +'\u0022' +  provincie + '\u0022' + ";");
+                    "WHERE orders.Provincie = " + '\u0022' +  provincie + '\u0022' + ";");
 
         }
         catch (ClassNotFoundException ex){
