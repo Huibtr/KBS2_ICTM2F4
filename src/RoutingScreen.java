@@ -82,8 +82,9 @@ public class RoutingScreen extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == jbBack) {
+            LogInScreen LoginScreen = new LogInScreen();
             dispose();
-            HomeScreen homeScreen = new HomeScreen();
+
         }
 
     }
