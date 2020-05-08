@@ -54,7 +54,11 @@ public class QuantityScreen extends JFrame {
                 public void valueChanged(ListSelectionEvent listSelectionEvent) {
                     if (!modelclick.isSelectionEmpty()){
                         int selectrow = modelclick.getMinSelectionIndex();
-                        JOptionPane.showMessageDialog(null, selectrow);
+                        try {
+                            QuantityInfoScreen QuantityInfoScreen = new QuantityInfoScreen();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             });

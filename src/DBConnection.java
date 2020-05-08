@@ -85,7 +85,45 @@ public class DBConnection {
         return result;
     }
 
+    public ResultSet getStockitem(int orderID){
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(url, username, password);
+            Statement query = connection.createStatement();
+
+            result = query.executeQuery("SELECT StockItemID, Description, PickedQuantity FROM orderlines where OrderID = " + orderID + ";");
+
+        }
+        catch (ClassNotFoundException ex){
+            Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE,null, ex);
+        }
+        catch (SQLException ex){
+            Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE,null, ex);
+            ex.printStackTrace();
+        }
+        return result;
+    }
+
     public ResultSet getQuantity(){
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(url, username, password);
+            Statement query = connection.createStatement();
+
+            result = query.executeQuery("SELECT stockitems.StockItemName, stockitems.StockItemID, stockitemholdings.QuantityOnHand FROM stockitems JOIN stockitemholdings ON stockitems.StockItemID = stockitemholdings.StockItemID;");
+
+        }
+        catch (ClassNotFoundException ex){
+            Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE,null, ex);
+        }
+        catch (SQLException ex){
+            Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE,null, ex);
+            ex.printStackTrace();
+        }
+        return result;
+    }
+
+    public ResultSet getQuantityInfo(){
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection(url, username, password);
