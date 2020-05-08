@@ -14,20 +14,25 @@ public class RoutingScreen extends JFrame implements ActionListener {
     private ArrayList<Route> routelijst;
     private String[] provincies;
     private JComboBox provincielijst;
+    ComboBoxProvincies provinciesBox;
 
     public RoutingScreen(){
-        provincies = new String[] {"Zeeland", "Limburg", "Noord-Brabant", "Friesland", "Noord-Holland", "Zuid-Holland", "Drenthe",
-                                    "Gelderland", "Flevoland", "Groningen", "Utrecht", "Overijssel"};
-        provincielijst = new JComboBox(provincies);
-        provincielijst.setSelectedIndex(11);
-        add(provincielijst);
-        setLayout(new FlowLayout());
+        DBConnection dbConnection = new DBConnection();
+        setLayout(new BorderLayout());
+        provinciesBox = new ComboBoxProvincies();
+       add(provinciesBox, BorderLayout.PAGE_START);
+       dbConnection.getRouteInfo(provinciesBox.getProvincieNaam());
+
+
+
+
+
         setSize(530, 500);
         RoutingPanel panel = new RoutingPanel(coordination);
-        add(panel);
-        jbBack = new JButton("terug");
-        jbBack.addActionListener(this);
-        add(jbBack);
+        add(panel, BorderLayout.LINE_START);
+//        jbBack = new JButton("terug");
+//        jbBack.addActionListener(this);
+//        add(jbBack, BorderLayout.PAGE_START);
 
 
 
@@ -48,7 +53,7 @@ public class RoutingScreen extends JFrame implements ActionListener {
         }
         table.setModel(model);
         //add the table to the frame
-        this.add(new JScrollPane(table));
+        this.add(new JScrollPane(table), BorderLayout.PAGE_END);
         this.setTitle("NerdyGadgets - Klantgegevens");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
@@ -61,7 +66,7 @@ public class RoutingScreen extends JFrame implements ActionListener {
         Route route;
         try {
             DBConnection dbConnection = new DBConnection();
-            ResultSet rs = dbConnection.getRouteInfo("Utrecht");
+            ResultSet rs = dbConnection.getRouteInfo(provinciesBox.getProvincieNaam());
             while(rs.next()){
                 route = new Route(
                         rs.getString("CustomerName"),
@@ -82,8 +87,9 @@ public class RoutingScreen extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == jbBack) {
+            LogInScreen LoginScreen = new LogInScreen();
             dispose();
-            HomeScreen homeScreen = new HomeScreen();
+
         }
 
     }

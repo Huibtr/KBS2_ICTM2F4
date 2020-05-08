@@ -47,8 +47,9 @@ public class DataScreen extends JFrame implements ActionListener {
             CustomerScreen customerScreen = new CustomerScreen();
             dispose();
         } else if(e.getSource() == jbGoBack) {
+            LogInScreen logInScreen = new LogInScreen();
             dispose();
-            HomeScreen homeScreen = new HomeScreen();
+
         }
     }
 }
