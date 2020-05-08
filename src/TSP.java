@@ -3,8 +3,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import static java.lang.Math.exp;
-import static java.lang.Math.sqrt;
+import static java.lang.Math.*;
 
 public class TSP {
     public ArrayList<Coordination> listCoordinates;
@@ -39,6 +38,8 @@ public class TSP {
             coordination = new Coordination(x,y);
             listCoordinates.add(coordination);
         }
+
+        getcordinaten();
     }
 
     public void getcordinaten() {
@@ -88,7 +89,7 @@ public class TSP {
 
 
             }
-            System.out.println((eerste + 1) + ". van punt " + begin + " naar punt " + kosteIndex + " is " + distance);
+            System.out.println(begin + " -> " + kosteIndex + " = " + distance);
             isReached.add(kosteIndex);
 
             oddDegree.add(begin);
@@ -107,18 +108,45 @@ public class TSP {
             }
             if ( teller % 2 != 0 ){
                 perfectMatching.add(indexOddDegree);
+                System.out.println(indexOddDegree);
             }
         }
 
 
         //3. Perfect Matching
+        ArrayList<PerfectMatch> savePerfectMatch = new ArrayList<>();
+        for (int alleIndexgebruiker = 0; alleIndexgebruiker < (perfectMatching.size()); alleIndexgebruiker++){
+            double kortsteafstand = 1000;
+            int bIndex = 0;
+            int eIndex = 0;
+            int beginIndex = 0;
+            int endIndex = 0;
+                for (int perfectIndex = 0; perfectIndex < perfectMatching.size(); perfectIndex++) {
+                    for (int i = 0; i < perfectMatching.size(); i++) {
+                        if (perfectIndex != i) {
+                            double afstand = getDistance(perfectMatching.get(perfectIndex), perfectMatching.get(i));
+                            if (afstand < kortsteafstand) {
+                                kortsteafstand = afstand;
+                                bIndex = perfectIndex;
+                                eIndex = i;
+                                beginIndex = perfectMatching.get(perfectIndex);
+                                endIndex = perfectMatching.get(i);
+                            }
+                        }
+                    }
+                }
+                PerfectMatch perfectMatch = new PerfectMatch(beginIndex, endIndex);
+                savePerfectMatch.add(perfectMatch);
+                System.out.println(beginIndex + "->" + endIndex + " = " + kortsteafstand);
 
-        for(int perfectIndex = 0; perfectIndex < perfectMatching.size(); perfectIndex++){
-            System.out.println(perfectMatching.get(perfectIndex));
+                perfectMatching.remove(bIndex);
+                perfectMatching.remove(eIndex - 1);
+
+            }
+
         }
 
-
-        }
+        //
 
         public double getDistance(int beginIndex, int endIndex){
             double distance;
