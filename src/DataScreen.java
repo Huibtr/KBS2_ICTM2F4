@@ -20,15 +20,15 @@ public class DataScreen extends JFrame implements ActionListener {
         jbGoBack.addActionListener(this);
         add(jbGoBack);
 
-        jbQuantity = new JButton("voorraad");
+        jbQuantity = new JButton("Voorraad");
         jbQuantity.addActionListener(this);
         add(jbQuantity);
 
-        jbOrders = new JButton("bestelling");
+        jbOrders = new JButton("Bestellingen");
         jbOrders.addActionListener(this);
         add(jbOrders);
 
-        jbCustomers = new JButton("klant gegevens");
+        jbCustomers = new JButton("Klanten");
         jbCustomers.addActionListener(this);
         add(jbCustomers);
 
@@ -47,9 +47,8 @@ public class DataScreen extends JFrame implements ActionListener {
             CustomerScreen customerScreen = new CustomerScreen();
             dispose();
         } else if(e.getSource() == jbGoBack) {
-            LogInScreen logInScreen = new LogInScreen();
             dispose();
-
+            HomeScreen homeScreen = new HomeScreen();
         }
     }
 }
