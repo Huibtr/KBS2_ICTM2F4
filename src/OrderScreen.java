@@ -15,19 +15,17 @@ public class OrderScreen extends JFrame{
         DefaultTableModel model = new DefaultTableModel();
 
         Object[] columnsName = new Object[] {
-                "KlantID", "BestellingID", "ProductID", "Voorraad"
+                "KlantID", "BestellingID"
         };
 
         model.setColumnIdentifiers(columnsName);
 
-        Object[] rowData = new Object[4];
+        Object[] rowData = new Object[2];
 
         for(int i = 0; i < orders.size(); i++){
 
             rowData[0] = orders.get(i).getCustomerID();
             rowData[1] = orders.get(i).getOrderID();
-            rowData[2] = orders.get(i).getStockItemID();
-            rowData[3] = orders.get(i).getQuantity();
             model.addRow(rowData);
         }
 
@@ -77,9 +75,7 @@ public class OrderScreen extends JFrame{
 
                 order = new Order(
                         rs.getInt("CustomerID"),
-                        rs.getInt("OrderID"),
-                        rs.getInt("StockItemID"),
-                        rs.getInt("Quantity")
+                        rs.getInt("OrderID")
                 );
 
                 orders.add(order);

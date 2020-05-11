@@ -53,7 +53,7 @@ public class DBConnection {
             Connection connection = DriverManager.getConnection(url, username, password);
             Statement query = connection.createStatement();
 
-            result = query.executeQuery("SELECT orders.CustomerID, orders.OrderID, orderlines.StockitemID, orderlines.Quantity FROM orderlines LEFT JOIN orders ON orders.OrderID=orderlines.OrderID Where CustomerID < 4;");
+            result = query.executeQuery("SELECT distinct orders.CustomerID, orders.OrderID FROM orders Where CustomerID < 4;");
 
         }
         catch (ClassNotFoundException ex){
