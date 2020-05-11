@@ -2,39 +2,52 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class OrderScreen extends JFrame{
+public class OrderScreen extends JFrame implements ActionListener {
     private ArrayList<Order> orders;
+    private JButton JBterug;
 
     public OrderScreen() {
         getOrder();
+        this.setTitle("NerdyGadgets - Bestellingen");
+        setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+
+        JBterug = new JButton("< terug");
+        JBterug.addActionListener(this);
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 0;
+        c.gridy = 0;
+        add(JBterug, c);
+
         JTable table = new JTable();
-
         DefaultTableModel model = new DefaultTableModel();
-
         Object[] columnsName = new Object[] {
                 "KlantID", "BestellingID"
         };
-
         model.setColumnIdentifiers(columnsName);
-
         Object[] rowData = new Object[2];
-
         for(int i = 0; i < orders.size(); i++){
 
             rowData[0] = orders.get(i).getCustomerID();
             rowData[1] = orders.get(i).getOrderID();
             model.addRow(rowData);
         }
-
         table.setModel(model);
-
         //add the table to the frame
-        this.add(new JScrollPane(table));
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.ipady = 200;      //make this component tall
+        c.weightx = 0.0;
+        c.gridwidth = 4;
+        c.gridx = 0;
+        c.gridy = 1;
+        add(new JScrollPane(table), c);
 
-        this.setTitle("NerdyGadgets - Bestellingen");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
         this.setVisible(true);
@@ -87,4 +100,11 @@ public class OrderScreen extends JFrame{
     }
 
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == JBterug) {
+            dispose();
+            DataScreen dataScreen = new DataScreen();
+        }
+    }
 }

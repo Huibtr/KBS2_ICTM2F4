@@ -18,7 +18,7 @@ public class CustomerScreen extends JFrame implements ActionListener {
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
-        JButton JBterug = new JButton("< terug");
+        JBterug = new JButton("< terug");
         JBterug.addActionListener(this);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
@@ -46,9 +46,11 @@ public class CustomerScreen extends JFrame implements ActionListener {
         c.gridx = 0;
         c.gridy = 1;
         add(new JScrollPane(table), c);
+
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
         this.setVisible(true);
+
         ListSelectionModel modelclick = table.getSelectionModel();
         modelclick.addListSelectionListener(new ListSelectionListener() {
             @Override
@@ -95,7 +97,8 @@ public class CustomerScreen extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == JBterug) {
-
+            dispose();
+            DataScreen dataScreen = new DataScreen();
         }
     }
 }

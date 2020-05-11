@@ -110,7 +110,7 @@ public class DBConnection {
             Connection connection = DriverManager.getConnection(url, username, password);
             Statement query = connection.createStatement();
 
-            result = query.executeQuery("SELECT stockitems.StockItemName, stockitems.StockItemID, stockitemholdings.QuantityOnHand FROM stockitems JOIN stockitemholdings ON stockitems.StockItemID = stockitemholdings.StockItemID;");
+            result = query.executeQuery("SELECT StockItemID, StockItemName FROM stockitems ORDER BY StockItemID;");
 
         }
         catch (ClassNotFoundException ex){
@@ -123,13 +123,13 @@ public class DBConnection {
         return result;
     }
 
-    public ResultSet getQuantityInfo(){
+    public ResultSet getQuantityInfo(int StockItemID){
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection(url, username, password);
             Statement query = connection.createStatement();
 
-            result = query.executeQuery("SELECT stockitems.StockItemName, stockitems.StockItemID, stockitemholdings.QuantityOnHand FROM stockitems JOIN stockitemholdings ON stockitems.StockItemID = stockitemholdings.StockItemID;");
+            result = query.executeQuery("SELECT stockitems.StockItemName, stockitems.StockItemID, stockitemholdings.QuantityOnHand FROM stockitems JOIN stockitemholdings ON stockitems.StockItemID = stockitemholdings.StockItemID WHERE stockitems.StockItemID = " + StockItemID + ";");
 
         }
         catch (ClassNotFoundException ex){

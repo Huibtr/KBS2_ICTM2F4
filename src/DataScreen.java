@@ -11,7 +11,7 @@ public class DataScreen extends JFrame implements ActionListener {
     private JButton jbGoBack;
 
     public DataScreen(){
-        setTitle("Nerdy Gadgets - gegevens inzien/ aanpassen");
+        setTitle("Nerdy Gadgets - Gegevens inzien");
         setSize(500, 300);
         setLayout(new GridLayout(4,1));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
