@@ -7,9 +7,10 @@ import java.awt.event.ActionListener;
 
 public class ComboBoxProvincies extends JPanel implements ActionListener {
     private String provincieNaam;
+    private RoutingScreen routingScreen;
     public ComboBoxProvincies() {
-        String[] provincies = new String[]{"Zeeland", "Limburg", "Noord-Brabant", "Friesland", "Noord-Holland", "Zuid-Holland", "Drenthe",
-                "Gelderland", "Flevoland", "Groningen", "Utrecht", "Overijssel"};
+        String[] provincies = new String[]{"Utrecht", "Limburg", "Noord-Brabant", "Friesland", "Noord-Holland", "Zuid-Holland", "Drenthe",
+                "Gelderland", "Flevoland", "Groningen", "Zeeland", "Overijssel"};
         JComboBox provincielijst = new JComboBox(provincies);
         provincielijst.setSelectedIndex(11);
         provincielijst.addActionListener(this);
@@ -21,7 +22,16 @@ public class ComboBoxProvincies extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         JComboBox cb = (JComboBox)e.getSource();
         provincieNaam = (String)cb.getSelectedItem();
+        if (provincieNaam == null) {
+            provincieNaam = "Utrecht";
+        }
         System.out.println(provincieNaam);
+
+
+
+
+
+
 
     }
 

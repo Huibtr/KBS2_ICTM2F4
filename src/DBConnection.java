@@ -147,5 +147,9 @@ public class DBConnection {
         }
         return result;
     }
+
+    public ResultSet getXenY(String provincie){
+        return null;
+    }
 }
 
